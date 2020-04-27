@@ -1,3 +1,5 @@
+import pandas as pd
+
 
 # Estimating the values for the weight
 def weight_training(trainSet, learningRate, epoch):
@@ -6,7 +8,7 @@ def weight_training(trainSet, learningRate, epoch):
     Epochs: Number of execution of weight updation
 
     w1 = w1 + Learning rate * (expected - predicted) * X1
-    bias = bias + Learning rate * (expected - predicted)
+    bias or w0 = bias + Learning rate * (expected - predicted)
 
     :return:
     """
@@ -33,7 +35,7 @@ def weight_training(trainSet, learningRate, epoch):
 
                 #print(i, weight[i + 1], learningRate , error , row[i], end='')
                 #print('')
-        print('>epoch=%d, lrate=%.3f, error=%.3f' % (epoch, learningRate, total_error))
+        #print('>epoch=%d, lrate=%.3f, error=%.3f' % (epoch, learningRate, total_error))
     return weight
 
 # Making a prediction with weight calculation
@@ -74,14 +76,26 @@ dataset = [[2.7810836, 2.550537003, 0],
            [8.675418651, -0.242068655, 1],
            [7.673756466, 3.508563011, 1]
            ]
-# Weight
+# Capturing filename from user
+#filename = input("Please enter the filename of training dataset: ")
+
+# Reading train dataset from file using pandas
+trainSet = pd.read_csv('dataset', delimiter=" ")
+trainSet = trainSet.values.tolist()
+
+print(trainSet)
+
+# Weight calculating variables
 learningRate = 0.1
-epoch = 5
+epoch = 10
+
+# Deriving the weights from the training dataset
 weight = weight_training(dataset, learningRate, epoch)
 
 print(weight)
 
+# Predicting the class values using the weights
+# received from the training dataset
 for row in dataset:
-    pass
-    #predicted_value = prediction(row, weights)
-    #print("Expected=%d, Predicted=%d" % (row[-1], predicted_value))
+    predicted_value = prediction(row, weight)
+    print("Expected=%d, Predicted=%d" % (row[-1], predicted_value))
