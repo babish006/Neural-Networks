@@ -1,13 +1,20 @@
 
 # Making a prediction with weight calculation
-def prediction(row, weights):
-    activation = weights[0]
+def prediction(row, weights, bias):
+    """
+    activation = sum(weight + training data) + bias
+
+    1.0 => activation >= 0.0
+    0.0 => activation < 0.0
+    """
+
+    sum = bias
 
     for i in range(len(row) - 1):
         #print(i, row[i], activation, weights[i + 1])
-        activation += weights[i + 1] * row[i]
-    print(activation)
-    return 1.0 if activation >= 0.0 else 0.0
+        sum += weights[i + 1] * row[i]
+    print(sum)
+    return 1.0 if sum >= 0.0 else 0.0
 
 
 # test predictions
@@ -23,6 +30,8 @@ dataset = [[2.7810836, 2.550537003, 0]#,
            #[7.673756466, 3.508563011, 1]
            ]
 weights = [-0.1, 0.20653640140000007, -0.23418117710000003]
+bias = -0.1
+
 for row in dataset:
-    predicted = prediction(row, weights)
+    predicted = prediction(row, weights, bias)
     #print("Expected=%d, Predicted=%d" % (row[-1], predicted))
