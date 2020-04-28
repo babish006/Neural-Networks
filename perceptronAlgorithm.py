@@ -83,19 +83,19 @@ dataset = [[2.7810836, 2.550537003, 0],
 trainSet = pd.read_csv('dataset', delimiter=" ")
 trainSet = trainSet.values.tolist()
 
-print(trainSet)
+#print(trainSet)
 
 # Weight calculating variables
 learningRate = 0.1
-epoch = 10
+epoch = 1000
 
 # Deriving the weights from the training dataset
-weight = weight_training(dataset, learningRate, epoch)
+weight = weight_training(trainSet, learningRate, epoch)
 
 print(weight)
 
 # Predicting the class values using the weights
 # received from the training dataset
-for row in dataset:
+for row in trainSet:
     predicted_value = prediction(row, weight)
     print("Expected=%d, Predicted=%d" % (row[-1], predicted_value))
