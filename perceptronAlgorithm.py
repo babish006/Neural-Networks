@@ -26,6 +26,7 @@ def weight_training(trainSet, learningRate, epoch):
 
             # Calculating the value for bias
             weight[0] = weight[0] + learningRate * error
+            #print(weight[0])
             
             #print(x, row, 'Expected:', row[-1], 'Predicted:', predicted_value, 'Error:', error, 'Total Error:', total_error)
 
@@ -35,7 +36,7 @@ def weight_training(trainSet, learningRate, epoch):
 
                 #print(i, weight[i + 1], learningRate , error , row[i], end='')
                 #print('')
-        #print('>epoch=%d, lrate=%.3f, error=%.3f' % (epoch, learningRate, total_error))
+        print('>epoch=%d, lrate=%.3f, error=%.3f' % (epoch, learningRate, total_error))
     return weight
 
 # Making a prediction with weight calculation
@@ -65,37 +66,35 @@ def prediction(row, weight):
 
 
 # Test data
-dataset = [[2.7810836, 2.550537003, 0],
-           [1.465489372, 2.362125076, 0],
-           [3.396561688, 4.400293529, 0],
-           [1.38807019, 1.850220317, 0],
-           [3.06407232, 3.005305973, 0],
-           [7.627531214, 2.759262235, 1],
-           [5.332441248, 2.088626775, 1],
-           [6.922596716, 1.77106367, 1],
-           [8.675418651, -0.242068655, 1],
-           [7.673756466, 3.508563011, 1]
-           ]
+
 # Capturing filename from user
-#filename = input("Please enter the filename of training dataset: ")
+filename = input("Please enter the filename of training dataset: ")
+epoch = int(input("EPOCH Value: "))
 
 # Reading train dataset from file using pandas
-trainSet = pd.read_csv('dataset', delimiter=" ")
+trainSet = pd.read_csv(filename, delimiter=" ")
 trainSet = trainSet.values.tolist()
 
 #print(trainSet)
 
 # Weight calculating variables
 learningRate = 0.1
-epoch = 1000
+
 
 # Deriving the weights from the training dataset
 weight = weight_training(trainSet, learningRate, epoch)
 
-print(weight)
+print("")
 
 # Predicting the class values using the weights
 # received from the training dataset
+count = 0
+
 for row in trainSet:
     predicted_value = prediction(row, weight)
+    if(row[-1] == predicted_value):
+        count += 1
     print("Expected=%d, Predicted=%d" % (row[-1], predicted_value))
+print("")
+print("Accuracy Rate:",count/len(trainSet)*100)
+
